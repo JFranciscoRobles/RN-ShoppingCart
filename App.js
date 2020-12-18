@@ -1,21 +1,47 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React from "react";
+import { NavigationContainer } from "@react-navigation/native";
+import { createStackNavigator } from "@react-navigation/stack";
+import ProductosProvider from "./src/Context/ProductosProvider";
+import HomeScreen from "./src/Views/HomeScreen";
+import CartScreen from "./src/Views/CartScreen";
+import ButtonHeaderRight from "./src/Components/ButtonHeaderRight";
+
+const Stack = createStackNavigator();
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <ProductosProvider>
+      <NavigationContainer>
+        <Stack.Navigator
+          initialRouteName="Home"
+          screenOptions={{
+            headerTitleAlign: "center",
+            headerStyle: {
+              backgroundColor: "#007FFF",
+            },
+            headerTintColor: "#fff",
+            headerTitleStyle: {
+              fontWeight: "bold",
+            },
+          }}
+        >
+          <Stack.Screen
+            name="Home"
+            component={HomeScreen}
+            options={{
+              title: "Ebay",
+              headerRight: () => <ButtonHeaderRight />,
+            }}
+          />
+          <Stack.Screen
+            name="Cart"
+            component={CartScreen}
+            options={{
+              title: "Carrito de Compras",
+            }}
+          />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </ProductosProvider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
